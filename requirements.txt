@@ -5,7 +5,7 @@ click==8.5.0
 cloudpickle==3.1.2
 e==1.4.5
 fastapi==0.158.0
--e .
+-e git+https://github.com/AR-Ashik-9997/Sentiment-Pulse-Api.git@84cea9aa1e198a1a484ae2be682175f310362dff#egg=fastapi_app
 filelock==4.2.4
 fsspec==2026.9.0
 h11==0.16.0
