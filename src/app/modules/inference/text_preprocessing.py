@@ -73,7 +73,7 @@ def generate_review_dashboard_v3(reviews_list, model, vocab, max_len):
         lower_text = text.lower()
 
         emotion_keywords = {
-            "Joy / Excitement": [
+            "Joy": [
                 "thrilled",
                 "amazing",
                 "wonderful",
@@ -81,14 +81,16 @@ def generate_review_dashboard_v3(reviews_list, model, vocab, max_len):
                 "best",
                 "happy",
                 "excited",
+                "excitement",
             ],
-            "Anger / Frustration": [
+            "Anger": [
                 "terrible",
                 "awful",
                 "worst",
                 "hate",
                 "angry",
                 "horrible",
+                "Frustration",
             ],
             "Disappointment": ["disappointed", "poor", "bad", "useless"],
             "Gratitude": ["helpful", "thanks", "thank", "appreciate"],
@@ -102,7 +104,7 @@ def generate_review_dashboard_v3(reviews_list, model, vocab, max_len):
                 detected_emotions.append(emotion)
                 found_keywords.extend(matched)
 
-        emotion_result = f"{', '.join(detected_emotions) if detected_emotions else 'Neutral'} (Keywords: {', '.join(set(found_keywords)) if found_keywords else 'None'})"
+        emotion_result = f"{', '.join(detected_emotions) if detected_emotions else 'Neutral'}, {', '.join(set(found_keywords)) if found_keywords else 'None'}"
 
         base_impact = confidence if sentiment == "Positive" else -confidence
 
@@ -139,12 +141,12 @@ def generate_review_dashboard_v3(reviews_list, model, vocab, max_len):
         if (
             sentiment == "Negative"
             and confidence > 0.90
-            and "Anger / Frustration" in detected_emotions
+            and "Anger" in detected_emotions
         ):
             priority = "Critical"
             is_high_risk = True
         elif sentiment == "Negative" and (
-            confidence > 0.80 or "Anger / Frustration" in detected_emotions
+            confidence > 0.80 or "Frustration" in detected_emotions
         ):
             priority = "High"
             is_high_risk = True
